@@ -29,7 +29,7 @@ pipeline {
         nodejs('node') {
           script {
             def scannerHome = tool 'sonar-scanner';
-            withSonarQubeEnv('sonar-cloud') {
+            withSonarQubeEnv('sonar-cloud-g2') {
               echo "branch_name: $BRANCH_NAME"
               sh "${scannerHome}/bin/sonar-scanner"
             }
@@ -47,11 +47,11 @@ pipeline {
     stage('deploy') {
       steps {
         withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
-          s3Upload(bucket: 'udem20202-profe', file: 'dist/pet-book')
+          s3Upload(bucket: 'udem20202-equipo2', file: 'dist/pet-book')
         }
 
       }
-    }
+    }	
 
     stage('e2e') {
       steps {
